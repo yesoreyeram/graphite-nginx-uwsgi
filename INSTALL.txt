@@ -40,10 +40,17 @@ sudo curl -O https://raw.githubusercontent.com/yesoreyeram/graphite-nginx-uwsgi/
 sudo ln -s /etc/nginx/sites-available/graphite /etc/nginx/sites-enabled/graphite
 
 # Starting Daemons
+# sudo service nginx stop &
+# sudo /opt/graphite/bin/carbon-cache.py start &
+# sudo /usr/bin/uwsgi  --ini /etc/uwsgi/apps-enabled/graphite --pidfile /var/run/uwsgi.pid &
+# sudo service nginx start &
+
+# Install Supervisor
 sudo service nginx stop &
-sudo /opt/graphite/bin/carbon-cache.py start &
-sudo /usr/bin/uwsgi  --ini /etc/uwsgi/apps-enabled/graphite --pidfile /var/run/uwsgi.pid &
-sudo service nginx start &
+sudo apt-get install supervisor --yes
+cd /etc/supervisor/conf.d/
+sudo curl -O https://raw.githubusercontent.com/yesoreyeram/graphite-nginx-uwsgi/master/supervisor/supervisord.conf
+sudo service supervisor restart
 
 # Validating the installation
 echo "foo.bar 1 `date +%s`" | nc localhost 2003
