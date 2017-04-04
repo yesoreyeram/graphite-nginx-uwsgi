@@ -1,0 +1,30 @@
+upstream graphite {
+        server 127.0.0.1:5000 fail_timeout=0;
+}
+
+server {
+        listen 8888;
+
+        charset utf-8;
+        access_log /var/log/nginx/graphite.access.log;
+        error_log /var/log/nginx/graphite.error.log;
+
+        root /opt/graphite/webapp/graphite;
+
+        location /content {
+                alias /opt/graphite/webapp/content;
+        }
+
+        location /static {
+                alias /opt/graphite/webapp/content;
+        }
+
+        location / {
+                include uwsgi_params;
+                uwsgi_pass graphite;
+        }
+
+        location /static/admin {
+                alias /usr/lib/python2.7/dist-packages/django/contrib/admin/static/admin;
+        }
+}
