@@ -31,6 +31,7 @@ sudo apt-get install uwsgi uwsgi-plugin-python --yes
 sudo cp /opt/graphite/conf/graphite.wsgi.example /opt/graphite/conf/wsgi.py
 cd /etc/uwsgi/apps-available/
 sudo curl -O https://raw.githubusercontent.com/yesoreyeram/graphite-nginx-uwsgi/master/uWSGI/graphite
+sudo ln -s /etc/uwsgi/apps-available/graphite /etc/uwsgi/apps-enabled/graphite
 
 # Setting up nginx
 sudo apt-get install nginx --yes
