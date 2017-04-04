@@ -1,1 +1,0 @@
-# graphite-nginx-uwsgi
