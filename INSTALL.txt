@@ -48,4 +48,5 @@ sudo service nginx start &
 # Validating the installation
 echo "foo.bar 1 `date +%s`" | nc localhost 2003
 ls /opt/graphite/storage/whisper/
-curl localhost:8888
+curl "localhost:8888"
+curl "localhost:8888/render/?format=json&target=foo.bar&from=-10minutes"
