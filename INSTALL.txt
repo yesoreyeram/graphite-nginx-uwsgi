@@ -43,12 +43,6 @@ cd /etc/supervisor/conf.d/
 sudo curl -O https://raw.githubusercontent.com/yesoreyeram/graphite-nginx-uwsgi/graphite-nginx-gunicorn/supervisor/supervisord.conf
 sudo service supervisor restart
 
-# Setup Daemons
-#sudo python /opt/graphite/bin/carbon-cache.py --debug start &
-#cd /opt/graphite/webapp/
-#sudo gunicorn -b 127.0.0.1:5000 wsgi:application &
-#sudo service nginx reload
-
 # Validating the installation
 echo "foo.bar 1 `date +%s`" | nc localhost 2003
 ls /opt/graphite/storage/whisper/
