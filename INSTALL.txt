@@ -1,3 +1,5 @@
+#!/bin/bash
+
 ## Update System
 sudo apt-get update
 
@@ -23,8 +25,9 @@ sudo cp /opt/graphite/webapp/graphite/local_settings.py.example /opt/graphite/we
 sudo PYTHONPATH=/opt/graphite/webapp/ django-admin migrate  --settings=graphite.settings --run-syncdb
 
 ## Setting Graphite Web App Permission
-sudo useradd -s /bin/false _graphite
-sudo chown -R _graphite:_graphite /opt/graphite/
+#sudo useradd -s /bin/false _graphite
+#sudo chown -R _graphite:_graphite /opt/graphite/
+sudo chown -R www-data:www-data /opt/graphite/
 
 # Setting up uWSGI
 sudo apt-get install uwsgi uwsgi-plugin-python --yes
@@ -35,7 +38,7 @@ sudo ln -s /etc/uwsgi/apps-available/graphite /etc/uwsgi/apps-enabled/graphite
 
 # Setting up nginx
 sudo apt-get install nginx --yes
-sudo nano /etc/nginx/nginx.conf # Change the user to _graphite
+#sudo nano /etc/nginx/nginx.conf # Change the user to _graphite
 cd /etc/nginx/sites-available/
 sudo curl -O https://raw.githubusercontent.com/yesoreyeram/graphite-nginx-uwsgi/master/nginx/graphite
 sudo ln -s /etc/nginx/sites-available/graphite /etc/nginx/sites-enabled/graphite
