@@ -4,17 +4,38 @@
 sudo apt-get update
 
 ## Install Dependencies
-sudo apt-get install python-pip  python-cairo python-django --yes
+sudo apt-get install git python-pip  python-cairo python-django --yes
 sudo pip install cffi
 sudo pip install -r https://raw.githubusercontent.com/graphite-project/whisper/master/requirements.txt
 sudo pip install -r https://raw.githubusercontent.com/graphite-project/carbon/master/requirements.txt
 sudo pip install -r https://raw.githubusercontent.com/graphite-project/graphite-web/master/requirements.txt
 
-## Install Whisper, Carbon and Graphite
+## Set environment variables
 export PYTHONPATH="/opt/graphite/lib/:/opt/graphite/webapp/"
-sudo pip install --no-binary=:all: https://github.com/graphite-project/whisper/tarball/master
-sudo pip install --no-binary=:all: https://github.com/graphite-project/carbon/tarball/master
-sudo pip install --no-binary=:all: https://github.com/graphite-project/graphite-web/tarball/master
+
+# Install Whisper
+#sudo pip install --no-binary=:all: https://github.com/graphite-project/whisper/tarball/master
+git clone https://github.com/graphite-project/whisper.git
+cd whisper/
+git checkout 1.0.x
+sudo python setup.py install
+cd ..
+
+# Install Carbon
+#sudo pip install --no-binary=:all: https://github.com/graphite-project/carbon/tarball/master
+git clone https://github.com/graphite-project/carbon.git
+cd carbon/
+git checkout 1.0.x
+sudo python setup.py install
+cd ..
+
+# Install graphite-web
+#sudo pip install --no-binary=:all: https://github.com/graphite-project/graphite-web/tarball/master
+git clone https://github.com/graphite-project/graphite-web.git
+cd graphite-web/
+git checkout 1.0.x
+sudo python setup.py install
+cd ..
 
 ## Setting up Carbon
 sudo cp /opt/graphite/conf/carbon.conf.example /opt/graphite/conf/carbon.conf
