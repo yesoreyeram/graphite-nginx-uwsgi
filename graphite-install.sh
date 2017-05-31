@@ -4,7 +4,7 @@
 sudo apt-get update
 
 ## Install Dependencies
-sudo apt-get install git python-pip  python-cairo python-django --yes
+sudo apt-get install python-pip  python-cairo python-django --yes
 sudo pip install cffi
 sudo pip install -r https://raw.githubusercontent.com/graphite-project/whisper/master/requirements.txt
 sudo pip install -r https://raw.githubusercontent.com/graphite-project/carbon/master/requirements.txt
@@ -14,28 +14,28 @@ sudo pip install -r https://raw.githubusercontent.com/graphite-project/graphite-
 export PYTHONPATH="/opt/graphite/lib/:/opt/graphite/webapp/"
 
 # Install Whisper
-#sudo pip install --no-binary=:all: https://github.com/graphite-project/whisper/tarball/master
-git clone https://github.com/graphite-project/whisper.git
-cd whisper/
-git checkout 1.0.x
-sudo python setup.py install
-cd ..
+sudo pip install --no-binary=:all: https://github.com/graphite-project/whisper/tarball/master
+# git clone https://github.com/graphite-project/whisper.git
+# cd whisper/
+# git checkout 1.0.x
+# sudo python setup.py install
+# cd ..
 
 # Install Carbon
-#sudo pip install --no-binary=:all: https://github.com/graphite-project/carbon/tarball/master
-git clone https://github.com/graphite-project/carbon.git
-cd carbon/
-git checkout 1.0.x
-sudo python setup.py install
-cd ..
+sudo pip install --no-binary=:all: https://github.com/graphite-project/carbon/tarball/master
+# git clone https://github.com/graphite-project/carbon.git
+# cd carbon/
+# git checkout 1.0.x
+# sudo python setup.py install
+# cd ..
 
 # Install graphite-web
-#sudo pip install --no-binary=:all: https://github.com/graphite-project/graphite-web/tarball/master
-git clone https://github.com/graphite-project/graphite-web.git
-cd graphite-web/
-git checkout 1.0.x
-sudo python setup.py install
-cd ..
+sudo pip install --no-binary=:all: https://github.com/graphite-project/graphite-web/tarball/master
+# git clone https://github.com/graphite-project/graphite-web.git
+# cd graphite-web/
+# git checkout 1.0.x
+# sudo python setup.py install
+# cd ..
 
 ## Setting up Carbon
 sudo cp /opt/graphite/conf/carbon.conf.example /opt/graphite/conf/carbon.conf
@@ -59,10 +59,13 @@ sudo ln -s /etc/uwsgi/apps-available/graphite /etc/uwsgi/apps-enabled/graphite
 
 # Setting up nginx
 sudo apt-get install nginx --yes
+sudo service nginx stop &
+sudo nginx -g "daemon off;"
 #sudo nano /etc/nginx/nginx.conf # Change the user to _graphite
 cd /etc/nginx/sites-available/
 sudo curl -O https://raw.githubusercontent.com/yesoreyeram/graphite-nginx-uwsgi/master/nginx/graphite
 sudo ln -s /etc/nginx/sites-available/graphite /etc/nginx/sites-enabled/graphite
+sudo rm /etc/nginx/sites-available/graphite /etc/nginx/sites-enabled/default
 
 # Starting Daemons
 # sudo service nginx stop &
