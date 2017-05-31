@@ -1,19 +1,27 @@
 #!/bin/bash
 
-## Update System
+PrintHeading (){
+  echo "###########################";
+  echo "";
+  echo $@
+  echo "";
+  echo "###########################";
+}
+
+PrintHeading Update System
 sudo apt-get update
 
-## Install Dependencies
+PrintHeading Install Dependencies
 sudo apt-get install python-pip  python-cairo python-django --yes
 sudo pip install cffi
 sudo pip install -r https://raw.githubusercontent.com/graphite-project/whisper/master/requirements.txt
 sudo pip install -r https://raw.githubusercontent.com/graphite-project/carbon/master/requirements.txt
 sudo pip install -r https://raw.githubusercontent.com/graphite-project/graphite-web/master/requirements.txt
 
-## Set environment variables
+PrintHeading Set environment variables
 export PYTHONPATH="/opt/graphite/lib/:/opt/graphite/webapp/"
 
-# Install Whisper
+PrintHeading Install Whisper
 sudo pip install --no-binary=:all: https://github.com/graphite-project/whisper/tarball/master
 # git clone https://github.com/graphite-project/whisper.git
 # cd whisper/
@@ -21,7 +29,7 @@ sudo pip install --no-binary=:all: https://github.com/graphite-project/whisper/t
 # sudo python setup.py install
 # cd ..
 
-# Install Carbon
+PrintHeading Install Carbon
 sudo pip install --no-binary=:all: https://github.com/graphite-project/carbon/tarball/master
 # git clone https://github.com/graphite-project/carbon.git
 # cd carbon/
@@ -29,7 +37,7 @@ sudo pip install --no-binary=:all: https://github.com/graphite-project/carbon/ta
 # sudo python setup.py install
 # cd ..
 
-# Install graphite-web
+PrintHeading Install graphite-web
 sudo pip install --no-binary=:all: https://github.com/graphite-project/graphite-web/tarball/master
 # git clone https://github.com/graphite-project/graphite-web.git
 # cd graphite-web/
@@ -37,34 +45,32 @@ sudo pip install --no-binary=:all: https://github.com/graphite-project/graphite-
 # sudo python setup.py install
 # cd ..
 
-## Setting up Carbon
+PrintHeading Setting up Carbon
 sudo cp /opt/graphite/conf/carbon.conf.example /opt/graphite/conf/carbon.conf
 sudo cp /opt/graphite/conf/storage-schemas.conf.example /opt/graphite/conf/storage-schemas.conf
 sudo cp /opt/graphite/conf/storage-aggregation.conf.example /opt/graphite/conf/storage-aggregation.conf
 
-## Setting up Graphite Web
+PrintHeading Setting up Graphite Web
 sudo cp /opt/graphite/webapp/graphite/local_settings.py.example /opt/graphite/webapp/graphite/local_settings.py
 sudo PYTHONPATH=/opt/graphite/webapp/ django-admin migrate  --settings=graphite.settings --run-syncdb
 
-## Setting Graphite Web App Permission
+PrintHeading Setting Graphite Web App Permission
 #sudo useradd -s /bin/false _graphite
 #sudo chown -R _graphite:_graphite /opt/graphite/
 sudo chown -R www-data:www-data /opt/graphite/
 
-# Setting up uWSGI
+PrintHeading Setting up uWSGI
 sudo apt-get install uwsgi uwsgi-plugin-python --yes
 sudo cp /opt/graphite/conf/graphite.wsgi.example /opt/graphite/conf/wsgi.py
 cd /etc/uwsgi/apps-available/
 sudo curl -O https://raw.githubusercontent.com/yesoreyeram/graphite-nginx-uwsgi/master/uWSGI/graphite
 sudo ln -s /etc/uwsgi/apps-available/graphite /etc/uwsgi/apps-enabled/graphite
 
-# Setting up nginx
+PrintHeading Setting up nginx
 sudo apt-get install nginx --yes
 sudo service nginx stop 
-
 cd /etc/nginx/
 sudo curl -O https://raw.githubusercontent.com/yesoreyeram/graphite-setup/master/nginx/nginx.conf
-
 cd /etc/nginx/sites-available/
 sudo curl -O https://raw.githubusercontent.com/yesoreyeram/graphite-nginx-uwsgi/master/nginx/graphite
 sudo ln -s /etc/nginx/sites-available/graphite /etc/nginx/sites-enabled/graphite
@@ -76,14 +82,13 @@ sudo ln -s /etc/nginx/sites-available/graphite /etc/nginx/sites-enabled/graphite
 # sudo /usr/bin/uwsgi  --ini /etc/uwsgi/apps-enabled/graphite --pidfile /var/run/uwsgi.pid &
 # sudo service nginx start &
 
-# Install Supervisor
-#sudo service nginx stop &
+PrintHeading Install Supervisor
 sudo apt-get install supervisor --yes
 cd /etc/supervisor/conf.d/
 sudo curl -O https://raw.githubusercontent.com/yesoreyeram/graphite-nginx-uwsgi/master/supervisor/supervisord.conf
 sudo service supervisor restart
 
-# Validating the installation
+PrintHeading Validating the installation
 echo "foo.bar 1 `date +%s`" | nc localhost 2003
 ls /opt/graphite/storage/whisper/
 curl "localhost:8888"
