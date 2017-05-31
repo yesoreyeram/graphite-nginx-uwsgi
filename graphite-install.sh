@@ -60,8 +60,10 @@ sudo ln -s /etc/uwsgi/apps-available/graphite /etc/uwsgi/apps-enabled/graphite
 # Setting up nginx
 sudo apt-get install nginx --yes
 sudo service nginx stop 
-#sudo nginx -g "daemon off;"
-#sudo nano /etc/nginx/nginx.conf # Change the user to _graphite
+
+cd /etc/nginx/
+sudo curl -O https://raw.githubusercontent.com/yesoreyeram/graphite-setup/master/nginx/nginx.conf
+
 cd /etc/nginx/sites-available/
 sudo curl -O https://raw.githubusercontent.com/yesoreyeram/graphite-nginx-uwsgi/master/nginx/graphite
 sudo ln -s /etc/nginx/sites-available/graphite /etc/nginx/sites-enabled/graphite
