@@ -78,7 +78,7 @@ sudo ln -s /etc/nginx/sites-available/graphite /etc/nginx/sites-enabled/graphite
 #sudo rm /etc/nginx/sites-available/graphite /etc/nginx/sites-enabled/default
 
 PrintHeading Installing Grafana
-cd /etc/
+cd /opt/
 sudo mkdir grafana
 sudo wget https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-4.3.2.linux-x64.tar.gz 
 sudo tar -zxvf grafana-4.3.2.linux-x64.tar.gz
@@ -90,7 +90,7 @@ sudo rm grafana-4.3.2.linux-x64.tar.gz
 # sudo /opt/graphite/bin/carbon-cache.py start &
 # sudo /usr/bin/uwsgi  --ini /etc/uwsgi/apps-enabled/graphite --pidfile /var/run/uwsgi.pid &
 # sudo service nginx start &
-# sudo /etc/grafana/grafana-4.3.2/bin/grafana-server --homepath=/etc/grafana/grafana-4.3.2 --config=/etc/grafana/grafana-4.3.2/conf/defaults.ini
+# sudo /opt/grafana/grafana-4.3.2/bin/grafana-server --homepath=/opt/grafana/grafana-4.3.2 --config=/opt/grafana/grafana-4.3.2/conf/defaults.ini
 
 
 PrintHeading Install Supervisor
