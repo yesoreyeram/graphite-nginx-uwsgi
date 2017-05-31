@@ -1,6 +1,7 @@
 #!/bin/bash
 
 PrintHeading (){
+  echo "";
   echo "###########################";
   echo "";
   echo $@
