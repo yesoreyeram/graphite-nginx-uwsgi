@@ -40,6 +40,7 @@ sudo pip install --no-binary=:all: https://github.com/graphite-project/graphite-
 ## Setting up Carbon
 sudo cp /opt/graphite/conf/carbon.conf.example /opt/graphite/conf/carbon.conf
 sudo cp /opt/graphite/conf/storage-schemas.conf.example /opt/graphite/conf/storage-schemas.conf
+sudo cp /opt/graphite/conf/storage-aggregation.conf.example /opt/graphite/conf/storage-aggregation.conf
 
 ## Setting up Graphite Web
 sudo cp /opt/graphite/webapp/graphite/local_settings.py.example /opt/graphite/webapp/graphite/local_settings.py
