@@ -1,19 +1,13 @@
 [uwsgi]
 vacuum = true
 master = true
-cheaper = 2
-cheaper-initial = 2
-cheaper-algo = spare
-cheaper-overload = 30
-cheaper-step = 1
-workers = 10
+workers = 1
 socket = 0.0.0.0:5000
 plugins = python
 chdir = /opt/graphite/conf
 module = wsgi:application
 buffer-size = 65536
 threads = 1
-harakiri = 300
 max-requests = 5000
 log-maxsize = 104857600
 logto = /var/log/uwsgi/graphite.log
